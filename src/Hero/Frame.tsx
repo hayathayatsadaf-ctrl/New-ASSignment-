@@ -7,14 +7,12 @@ type Props = {
 };
 
 export default function Frame({ bgSrc, doctorSrc, children }: Props) {
-  // ✅ children split:
-  // first child = hero content
-  // rest = extras (hero__strip etc)
+  // children split
   const parts = React.Children.toArray(children);
   const heroContent = parts[0] ?? null;
   const extras = parts.slice(1);
 
-  // ✅ safe paths (agar "doctor.png" diya ho to bhi kaam kare)
+  // safe paths
   const bg = bgSrc.startsWith("/") ? bgSrc : `/${bgSrc}`;
   const doc = doctorSrc.startsWith("/") ? doctorSrc : `/${doctorSrc}`;
 
@@ -29,16 +27,17 @@ export default function Frame({ bgSrc, doctorSrc, children }: Props) {
         <div className="hero__grid">
           {heroContent}
 
-          {/* ✅ doctor always visible */}
+          {/* ✅ FIXED: 'doc' ko yahan use kar liya image tag mein */}
           <div className="hero__media">
-            
+             <img src={doc} alt="Doctor" className="hero__doctor-img" />
           </div>
         </div>
 
-        {/* ✅ strip / other absolute elements grid ke bahar */}
+        {/* strip / other absolute elements */}
         {extras}
       </div>
     </section>
   );
 }
+
 
