@@ -9,13 +9,11 @@ type PreviewProps = {
 export default function Preview({
   open,
   onClose,
-  bgImage = "/about%20(1).jpg",
+  bgImage = "/about (1).jpg",
 }: PreviewProps) {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
-
-
 
   useEffect(() => {
     if (!open) return;
@@ -40,14 +38,21 @@ export default function Preview({
     onClose();
   };
 
-  // ✅ optional: closed state me DOM avoid
   if (!open) return null;
 
+  const safeBg = bgImage?.startsWith("/") ? bgImage : `/${bgImage}`;
+
   return (
-    <div className="previewOverlay is-open" onMouseDown={onClose}>
+    <div
+      className="previewOverlay is-open"
+      onMouseDown={(e) => {
+        // ✅ only close if clicked on overlay itself
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
       <div
         className="previewPanel is-open"
-        style={{ backgroundImage: `url("${bgImage}")` }}
+        style={{ backgroundImage: `url('${safeBg}')` }}
         onMouseDown={(e: MouseEvent<HTMLDivElement>) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
@@ -90,9 +95,10 @@ export default function Preview({
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 placeholder="Enter your phone number"
+                inputMode="tel"
               />
             </label>
-
+ 
             <label className="pLabel">
               Email ID
               <input
@@ -100,6 +106,7 @@ export default function Preview({
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Enter your email ID"
+                type="email"
               />
             </label>
 
@@ -114,4 +121,5 @@ export default function Preview({
     </div>
   );
 }
+
 

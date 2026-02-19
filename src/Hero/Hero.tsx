@@ -11,7 +11,7 @@ type Props = {
 };
 
 export default function Hero({
-  bgSrc = "hero (4).jpg",
+  bgSrc = "/hero (4).jpg",
   doctorSrc = "/doctor.png",
   clinicPhone = "+91 00000 00000",
   onOpenPreview,

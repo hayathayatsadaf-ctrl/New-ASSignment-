@@ -65,4 +65,3 @@ export default function Doctar({ doctorImage = "/doc-Photoroom 1.png", ctaHref =
     </section>
   );
 }
-

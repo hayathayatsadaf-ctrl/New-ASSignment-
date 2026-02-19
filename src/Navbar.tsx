@@ -15,12 +15,7 @@ export default function Navbar({ onOpenPreview }: Props) {
           <span className="navbar__title">Dinaaz Hair &amp; Skin</span>
         </a>
 
-        {/* ✅ anchor ko button banaya, click -> preview open */}
-        <button
-          type="button"
-          className="navbar__cta"
-          onClick={onOpenPreview}
-        >
+        <button type="button" className="navbar__cta" onClick={onOpenPreview}>
           Book A Consultation
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path
@@ -36,5 +31,4 @@ export default function Navbar({ onOpenPreview }: Props) {
     </header>
   );
 }
-
 
