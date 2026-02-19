@@ -3,6 +3,7 @@ import Navbar from "./Navbar";
 import Hero from "./Hero/Hero";
 import Doctar from "./Doctar";
 import Preview from "./Preview";
+import FRAME from "./Frame/FRAME"
 
 export default function App() {
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -18,6 +19,7 @@ export default function App() {
         onClose={() => setPreviewOpen(false)}
         bgImage="/about%20(1).jpg"
       />
+      <FRAME/>
     </>
   );
 }

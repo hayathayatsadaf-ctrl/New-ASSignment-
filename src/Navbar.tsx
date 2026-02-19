@@ -8,11 +8,11 @@ export default function Navbar({ onOpenPreview }: Props) {
       <div className="navbar__container">
         <a className="navbar__brand" href="/">
           <img
-            src="/dinaaz_logo.png"
+            src="/logo (1).png"
             alt="Dinaaz Hair & Skin logo"
             className="navbar__logo"
           />
-          <span className="navbar__title">Dinaaz Hair &amp; Skin</span>
+
         </a>
 
         <button type="button" className="navbar__cta" onClick={onOpenPreview}>
