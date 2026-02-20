@@ -4,6 +4,8 @@ import Hero from "./Hero/Hero";
 import Doctar from "./Doctar";
 import Preview from "./Preview";
 import FRAME from "./Frame/FRAME"
+import Testi from "./test/testi";
+
 
 export default function App() {
   const [previewOpen, setPreviewOpen] = useState(false);
@@ -20,6 +22,10 @@ export default function App() {
         bgImage="/about%20(1).jpg"
       />
       <FRAME/>
+
+      <Testi/>
+
+
     </>
   );
 }
