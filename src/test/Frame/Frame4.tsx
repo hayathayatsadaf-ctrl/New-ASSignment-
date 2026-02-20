@@ -1,21 +1,18 @@
 type Props = {
-  leftSrc?: string;
-  rightSrc?: string;
-  leftAlt?: string;
-  rightAlt?: string;
+  topSrc?: string;
+  bottomSrc?: string;
 };
 
 export default function Frame4({
-  leftSrc = "/image 17.jpg",
-  rightSrc = "/image 16.jpg",
-  leftAlt = "Before result 4",
-  rightAlt = "After result 4",
+  topSrc = "/image 15.png",
+
+  bottomSrc = "/image 16.png",
 }: Props) {
   return (
     <figure className="ts-polaroid ts-polaroid--f4">
-      <div className="ts-polaroidGrid">
-        <img className="ts-polaroidImg" src={leftSrc} alt={leftAlt} />
-        <img className="ts-polaroidImg" src={rightSrc} alt={rightAlt} />
+      <div className="ts-polaroidStack">
+        <img className="ts-polaroidImg ts-polaroidImg--w" src={topSrc} alt="Result 4 photo 1" />
+        <img className="ts-polaroidImg ts-polaroidImg--w" src={bottomSrc} alt="Result 4 photo 2" />
       </div>
     </figure>
   );

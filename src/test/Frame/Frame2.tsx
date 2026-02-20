@@ -1,16 +1,18 @@
-
 type Props = {
-  src?: string;
-  alt?: string;
+  leftSrc?: string;
+  rightSrc?: string;
 };
 
 export default function Frame2({
-  src = "/image 17 (2).jpg",
-  alt = "Result 2",
+  leftSrc = "/WhatsApp Image 2026-02-11 at 10.49.12 AM (2) 1.jpg",
+  rightSrc = "/image 17 (1).jpg",
 }: Props) {
   return (
     <figure className="ts-polaroid ts-polaroid--f2">
-      <img className="ts-polaroidImg ts-polaroidImg--tall" src={src} alt={alt} />
+      <div className="ts-polaroidGrid">
+        <img className="ts-polaroidImg ts-polaroidImg--tall" src={leftSrc} alt="Result 2 before" />
+        <img className="ts-polaroidImg ts-polaroidImg--tall" src={rightSrc} alt="Result 2 after" />
+      </div>
     </figure>
   );
 }

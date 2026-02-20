@@ -8,8 +8,14 @@
 html, body, #root {
   width: 100%;
   max-width: 100%;
-  overflow-x: hidden; /* fallback */
-  overflow-x: clip;   /* modern */
+  overflow-x: hidden;
+  overflow-x: clip;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {
@@ -32,10 +38,10 @@ img { display: block; max-width: 100%; }
 }
 
 .page {
-  min-height: 90vh;
   max-width: 100%;
   overflow-x: hidden;
   overflow-x: clip;
+  min-height: auto; /* ✅ remove extra blank space */
 }
 
 /* =========================
@@ -117,15 +123,12 @@ img { display: block; max-width: 100%; }
 
   overflow-x: hidden;
   overflow-x: clip;
-  overflow-y: visible; /* strip overlap allowed */
+  overflow-y: visible;
 
   z-index: 10;
-
-  /* reserve for strip overlap */
-  padding-bottom: 44px;
+  padding-bottom: 44px; /* reserve for strip overlap */
 }
 
-/* background image */
 .hero__bg {
   position: absolute;
   inset: 0;
@@ -133,12 +136,10 @@ img { display: block; max-width: 100%; }
   height: 100%;
   object-fit: cover;
   object-position: center;
-
   transform: scale(1.06);
   filter: blur(1.2px) saturate(1.05);
 }
 
-/* teal overlay */
 .hero__overlay {
   position: absolute;
   inset: 0;
@@ -196,7 +197,6 @@ img { display: block; max-width: 100%; }
   margin-top: 8px;
 }
 
-/* buttons */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -229,7 +229,6 @@ img { display: block; max-width: 100%; }
   border: 1.5px solid rgba(255, 255, 255, 0.12);
 }
 
-/* hero doctor image (desktop) */
 .hero__media {
   position: relative;
   display: flex;
@@ -237,7 +236,7 @@ img { display: block; max-width: 100%; }
   align-items: flex-end;
   min-height: 360px;
   overflow: hidden;
-  z-index: 6; /* above strip */
+  z-index: 6;
 }
 
 .hero__doctor {
@@ -248,7 +247,7 @@ img { display: block; max-width: 100%; }
 }
 
 /* =========================
-   SLANTED RUNNING STRIP (OVERLAP)
+   SLANTED RUNNING STRIP
 ========================= */
 .hero__strip {
   position: absolute;
@@ -257,11 +256,9 @@ img { display: block; max-width: 100%; }
   bottom: -28px;
   background: var(--card);
   box-shadow: 0 18px 48px rgba(0, 0, 0, 0.22);
-
   transform: rotate(-6deg) scaleX(1.14);
   transform-origin: center;
-
-  z-index: 5; /* below doctor */
+  z-index: 5;
   padding: 16px 0;
   overflow: hidden;
 }
@@ -314,7 +311,6 @@ img { display: block; max-width: 100%; }
   .stripTrack { animation: none; }
 }
 
-/* helper */
 .after-hero { position: relative; z-index: 1; }
 
 /* =========================
@@ -353,14 +349,12 @@ img { display: block; max-width: 100%; }
   font-size: clamp(28px, 3.6vw, 48px);
 }
 
-/* layout desktop: text | photo | card */
 .doctor__grid {
   display: grid;
   grid-template-columns: 1fr 0.7fr 1fr;
   gap: clamp(16px, 2.8vw, 30px);
   align-items: end;
 }
-/* allow shrink (no overflow on mobile) */
 .doctor__grid > * { min-width: 0; }
 
 .doctor__left {
@@ -402,7 +396,7 @@ img { display: block; max-width: 100%; }
   );
   box-shadow: 0 14px 34px rgba(0,0,0,0.09);
   align-self: end;
-  overflow: hidden; /* safety */
+  overflow: hidden;
 }
 
 .doctor__quote {
@@ -426,7 +420,6 @@ img { display: block; max-width: 100%; }
   font-weight: 900;
 }
 
-/* CTA (anchor + button) */
 .doctor__cta {
   display: inline-flex;
   align-items: center;
@@ -462,176 +455,6 @@ button.doctor__cta{
 }
 
 .doctor__ctaIcon { width: 18px; height: 18px; flex: 0 0 auto; }
-
-/* =========================
-   RESPONSIVE
-========================= */
-
-/* 1200 */
-@media (max-width: 1200px) {
-  .navbar__container { padding: 0 32px; }
-
-  .hero__wrap { padding: 28px 32px; padding-top: 56px; }
-  .hero__grid { grid-template-columns: 1.1fr 0.9fr; gap: 32px; }
-
-  .doctor__container { max-width: 1040px; }
-  .doctor__grid { grid-template-columns: 1fr 0.75fr 1fr; gap: 24px; }
-}
-
-/* 1024 */
-@media (max-width: 1024px) {
-  .navbar__container { padding: 0 18px; }
-  .navbar__title { font-size: 20px; }
-  .navbar__logo { width: 200px; height: 46px; }
-  .navbar__cta { padding: 10px 18px; font-size: 13px; }
-
-  .hero { min-height: clamp(440px, 56vh, 640px); padding-bottom: 36px; }
-  .hero__title { font-size: clamp(32px, 4.6vw, 56px); }
-  .hero__desc { font-size: 16px; }
-  .hero__media { min-height: 300px; }
-  .hero__doctor { width: min(360px, 100%); }
-  .hero__strip { bottom: -22px; transform: rotate(-5deg) scaleX(1.08); }
-  .stripItem { font-size: 16px; }
-
-  .doctor { padding-top: 72px; padding-bottom: 64px; }
-  .doctor__title { font-size: clamp(26px, 4.2vw, 42px); }
-  .doctor__left { font-size: 15px; }
-  .doctor__quote { font-size: 18px; }
-}
-
-/* ✅ MOBILE EXACT (your screenshot look) */
-@media (max-width: 900px) {
-  /* ---------- HERO ---------- */
-  .hero__grid { grid-template-columns: 1fr; }
-
-  /* show bg subject on right */
-  .hero__bg{
-    transform: none;
-    filter: none;
-    object-position: right center;
-  }
-
-  /* overlay like screenshot */
-  .hero__overlay{
-    background: linear-gradient(
-      90deg,
-      rgba(11, 111, 115, 0.94) 0%,
-      rgba(12, 128, 132, 0.74) 52%,
-      rgba(12, 128, 132, 0.16) 78%,
-      rgba(0, 0, 0, 0) 100%
-    );
-  }
-
-  /* text width like screenshot */
-  .hero__content { max-width: 72%; }
-
-  /* ✅ hide extra hero doctor image on mobile */
-  .hero__media { display: none; }
-
-  /* buttons not full page; align like screenshot */
-  .hero__actions { gap: 10px; }
-  .hero__actions .btn{
-    width: min(260px, 100%);
-    justify-content: center;
-  }
-
-  .hero__strip { bottom: -18px; transform: rotate(-4.5deg) scaleX(1.05); }
-  .stripItem { font-size: 15px; }
-
-  /* ---------- DOCTOR ---------- */
-  /* 2 columns: text | photo, card full below */
-  .doctor__grid{
-    grid-template-columns: 1.05fr 0.95fr;
-    align-items: start;
-    gap: 18px;
-  }
-
-  .doctor__left{
-    grid-column: 1 / 2;
-    grid-row: 1;
-  }
-
-  .doctor__photoWrap{
-    grid-column: 2 / 3;
-    grid-row: 1;
-    justify-content: flex-end;
-    align-items: flex-end;
-  }
-
-  .doctor__photo{
-    width: min(240px, 100%);
-  }
-
-  .doctor__card{
-    grid-column: 1 / -1;
-    grid-row: 2;
-    max-width: 100%;
-    margin-top: 10px;
-    align-self: start;
-  }
-
-  .doctor__cta{
-    width: 100%;
-    justify-content: center;
-  }
-}
-
-/* 768 */
-@media (max-width: 768px) {
-  .navbar__container { padding: 0 14px; }
-  .navbar__title { font-size: 18px; }
-  .navbar__logo { width: 200px; height: 46px; }
-  .navbar__cta { padding: 10px 14px; font-size: 13px; }
-
-  .hero__wrap { padding: 22px 16px; padding-top: 44px; }
-  .hero__title { font-size: clamp(28px, 7vw, 44px); line-height: 1.06; }
-  .hero__desc { font-size: 15px; margin-bottom: 18px; }
-
-  .hero__strip { padding: 12px 0; transform: rotate(-4deg) scaleX(1.03); }
-  .stripItem__icon { width: 18px; height: 18px; }
-  .stripItem { font-size: 14px; }
-
-  .doctor { padding-top: 68px; padding-bottom: 56px; }
-  .doctor__container { padding: 0 16px; }
-  .doctor__kicker { font-size: 11px; margin-bottom: 8px; }
-  .doctor__title { font-size: clamp(24px, 7vw, 36px); margin-bottom: 18px; }
-  .doctor__left { font-size: 14px; }
-  .doctor__list { font-size: 14px; }
-  .doctor__quote { font-size: 16px; }
-}
-
-/* ✅ very small phones: stack doctor section + full buttons */
-@media (max-width: 520px){
-  /* HERO */
-  .hero__content { max-width: 78%; }
-  .hero__actions .btn{ width: 100%; }
-    .navbar__logo { width: 150px; height: 46px; }
-  /* DOCTOR */
-  .doctor__grid{ grid-template-columns: 1fr; }
-  .doctor__photoWrap{ justify-content: center; }
-  .doctor__photo{ width: min(260px, 86%); }
-  .doctor__card{ margin-top: 8px; padding: 18px 16px 16px; }
-  .doctor__cta{ font-size: 13px; padding: 12px 14px; }
-}
-
-/* 480 */
-@media (max-width: 480px) {
-  .navbar__cta { padding: 9px 12px; font-size: 12px; }
-
-  .hero { min-height: clamp(420px, 54vh, 600px); padding-bottom: 30px; }
-  .hero__title { font-size: 30px; }
-  .hero__desc { font-size: 14px; }
-
-  .hero__strip { bottom: -14px; transform: rotate(-3.5deg) scaleX(1.02); }
-  .stripItem { font-size: 13px; }
-}
-
-/* 360 */
-@media (max-width: 360px) {
-  .hero__title { font-size: 26px; }
-  .stripItem { font-size: 12px; }
-  .doctor__title { font-size: 24px; }
-}
 
 /* =========================
    PREVIEW (CLEAN + OPAQUE)
@@ -786,140 +609,9 @@ button.doctor__cta{
   color: rgba(255,255,255,0.78);
 }
 
-@media (max-width: 900px){
-  .previewPanel{
-    width: calc(100% - 20px);
-    height: min(560px, calc(100vh - 32px));
-    border-radius: 24px;
-    background-position: center;
-  }
-
-  .previewContent{
-    grid-template-columns: 1fr;
-    align-items: start;
-    padding-top: 54px;
-  }
-
-  .previewForm{ justify-items: start; }
-
-  .previewBig{ font-size: clamp(34px, 9.2vw, 56px); }
-  .previewSub{ font-size: clamp(14px, 4.5vw, 22px); }
-}
-
-@media (max-width: 520px){
-  .previewPanel{
-    top: 10px;
-    height: min(620px, calc(100vh - 20px));
-    border-radius: 20px;
-  }
-
-  .previewClose{
-    top: 10px;
-    right: 10px;
-    width: 32px;
-    height: 32px;
-    font-size: 15px;
-  }
-
-  .pLabel{ font-size: 13px; }
-  .pInput{ height: 42px; }
-  .pBtn{ height: 52px; font-size: 15px; }
-}
-
-
-/* =========================
-   FIX PATCH (for your 3 screenshots)
-   Paste at END of CSS
-========================= */
-
-/* ---------- HERO: remove big empty/black space on mobile ---------- */
-@media (max-width: 900px){
-  .hero{
-    min-height: auto;      /* ✅ stop forcing tall hero */
-    padding-bottom: 26px;  /* ✅ less reserve so no huge gap */
-  }
-
-  .hero__wrap{
-    padding-bottom: 10px;  /* ✅ reduce bottom padding */
-  }
-
-  /* ✅ keep bg visible on right but avoid awkward crop */
-  .hero__bg{
-    object-position: right center;
-  }
-
-  /* ✅ strip overlap controlled (less gap) */
-  .hero__strip{
-    bottom: -14px;
-    transform: rotate(-4deg) scaleX(1.03);
-    padding: 12px 0;
-  }
-
-  /* ✅ hero buttons full width (clean) */
-  .hero__content{ max-width: 100%; }
-  .hero__actions .btn{ width: 100%; }
-}
-
-/* ---------- DOCTOR: stop vertical/word-by-word stacking ---------- */
-@media (max-width: 900px){
-  /* ✅ force clean single column layout */
-  .doctor__grid{
-    grid-template-columns: 1fr !important;
-    gap: 18px;
-  }
-
-  .doctor__left,
-  .doctor__photoWrap,
-  .doctor__card{
-    grid-column: 1 / -1 !important;
-    grid-row: auto !important;
-  }
-
-  .doctor__photoWrap{ justify-content: center; }
-  .doctor__photo{ width: min(320px, 86%); }
-
-  /* ✅ prevent weird letter stacking */
-  .doctor__left,
-  .doctor__left p,
-  .doctor__list,
-  .doctor__list li{
-    white-space: normal !important;
-    word-break: normal !important;
-    overflow-wrap: break-word !important;
-  }
-
-  /* ✅ list indentation normal */
-  .doctor__list{ padding-left: 18px; }
-}
-
-/* ---------- extra small: tighter spacing ---------- */
-@media (max-width: 520px){
-  .hero__title{ font-size: clamp(26px, 7.4vw, 38px); }
-  .hero__desc{ font-size: 14px; }
-
-  .doctor__container{ padding: 0 16px; }
-  .doctor__card{ padding: 18px 16px 16px; }
-  .doctor__cta{ padding: 12px 14px; font-size: 13px; }
-}
-
-/* ✅ REMOVE EXTRA BLANK SPACE BELOW HERO */
-.page{
-  min-height: auto !important;   /* or unset */
-}
-
-/* optional: only for mobile */
-@media (max-width: 900px){
-  .page{ min-height: auto !important; }
-}
-
-
-
-
 /* =========================================================
-   FRAME (EXACT FEEL) — REPLACE FULL FRAME CSS WITH THIS
+   FRAME SECTION (Problem + Difference)
 ========================================================= */
-
-/* --- Section base --- */
 .frameSection{
   background: #d9f0f1;
   color: #0b0f10;
@@ -927,7 +619,6 @@ button.doctor__cta{
   position: relative;
   overflow: hidden;
 }
-
 .frameSection::before{
   content:"";
   position:absolute;
@@ -938,26 +629,14 @@ button.doctor__cta{
     radial-gradient(circle at 55% 80%, rgba(12,128,132,0.12) 0%, rgba(12,128,132,0) 62%);
   pointer-events:none;
 }
-
 .frameContainer{
   position: relative;
   z-index: 2;
-
-  /* ✅ exact “tight but premium” width */
   max-width: 1020px;
   margin: 0 auto;
   padding: 0 18px;
 }
 
-/* =========================================================
-   PROBLEM (Top)
-========================================================= */
-.problemBlock{
-  padding: 0;
-  margin: 0;
-}
-
-/* ✅ make whole top section one clean canvas */
 .problemGrid{
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
@@ -965,7 +644,6 @@ button.doctor__cta{
   align-items: start;
 }
 
-/* Title */
 .problemKicker{
   font-size: 10px;
   letter-spacing: .26em;
@@ -980,8 +658,6 @@ button.doctor__cta{
   font-weight: 900;
   letter-spacing: -0.02em;
 }
-
-/* Left text (small + clean) */
 .problemPara{
   margin: 12px 0 0;
   color: rgba(11,15,16,0.60);
@@ -998,13 +674,12 @@ button.doctor__cta{
 }
 .problemList li{ margin: 6px 0; }
 
-/* ✅ Problem visual = exact positions */
 .problemVisual{
   position: relative;
   min-height: 330px;
+  overflow: visible !important;
 }
 
-/* center circle note */
 .problemCenterNote{
   position: absolute;
   left: 46%;
@@ -1013,19 +688,15 @@ button.doctor__cta{
   width: 260px;
   height: 260px;
   border-radius: 999px;
-
   display: grid;
   place-items: center;
   text-align: center;
-
   background:
     radial-gradient(circle at 40% 35%, rgba(255,255,255,0.55) 0%, rgba(255,255,255,0.18) 38%, rgba(255,255,255,0) 70%),
     rgba(255,255,255,0.20);
-
   border: 1px solid rgba(0,0,0,0.05);
   box-shadow: 0 18px 44px rgba(0,0,0,0.10);
 }
-
 .problemCenterNote__text{
   width: 78%;
   font-size: 12px;
@@ -1033,18 +704,16 @@ button.doctor__cta{
   font-weight: 700;
   color: rgba(11,15,16,0.62);
 }
-
 .problemHL{ color: rgba(11,111,115,0.95); font-weight: 900; }
 .problemHL2{ color: rgba(217,139,43,0.98); font-weight: 900; }
 .problemHL3{ color: rgba(217,139,43,0.98); font-style: italic; font-weight: 900; }
 
-/* circles */
 .problemBubble{
   position: absolute;
   width: 150px;
   text-align: center;
+  z-index: 1;
 }
-
 .problemBubble__img{
   width: 92px;
   height: 92px;
@@ -1053,8 +722,9 @@ button.doctor__cta{
   border: 7px solid rgba(255,255,255,0.9);
   box-shadow: 0 16px 34px rgba(0,0,0,0.12);
   margin: 0 auto;
+  transition: transform 220ms ease, box-shadow 220ms ease;
+  will-change: transform;
 }
-
 .problemBubble__cap{
   margin-top: 8px;
   font-size: 10px;
@@ -1062,21 +732,18 @@ button.doctor__cta{
   color: rgba(11,15,16,0.55);
   font-weight: 600;
 }
-
-/* ✅ exact placement like screenshot */
 .problemBubble--tr{ right: 22px; top: 2px; }
 .problemBubble--bl{ left: 28px; bottom: 10px; }
 .problemBubble--br{ right: 38px; bottom: 18px; }
 
-/* =========================================================
-   DIFFERENCE (Bottom)
-========================================================= */
-.diffBlock{
-  margin-top: 24px;
-  padding: 0;
+.problemBubble:hover { z-index: 5; }
+.problemBubble:hover .problemBubble__img{
+  transform: translateY(-8px) scale(1.08);
+  box-shadow: 0 22px 50px rgba(0,0,0,0.22);
 }
 
-/* top row: left tag bubble + right heading */
+.diffBlock{ margin-top: 24px; padding: 0; }
+
 .diffTop{
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1100,7 +767,6 @@ button.doctor__cta{
 .diffTag span{ color: rgba(217,139,43,0.98); font-weight: 900; }
 
 .diffTitleWrap{ text-align: right; }
-
 .diffKicker{
   font-size: 10px;
   letter-spacing: 0.22em;
@@ -1108,7 +774,6 @@ button.doctor__cta{
   color: rgba(11,111,115,0.85);
   margin-bottom: 6px;
 }
-
 .diffTitle{
   margin: 0;
   font-size: 34px;
@@ -1117,90 +782,86 @@ button.doctor__cta{
   letter-spacing: -0.02em;
 }
 
-/* ✅ WIDTH KM: grid ko narrow + center */
 .diffGrid{
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 12px;
-
-  max-width: 860px;      /* ✅ width kam */
+  max-width: 860px;
   margin: 10px auto 0;
+  overflow: visible !important;
 }
-
-/* ✅ FIX: image perfect fit + clean padding like screenshot */
 
 .diffCard{
   background: rgba(255,255,255,0.82);
   border: 1px solid rgba(0,0,0,0.06);
   border-radius: 14px;
   box-shadow: 0 14px 28px rgba(0,0,0,0.08);
-  overflow: hidden;
-
-  /* ❌ yaha padding mat do */
   padding: 0;
-
   display: flex;
   flex-direction: column;
-
-  /* ✅ height kam (blank kam hoga) */
   height: 250px;
+  overflow: visible !important;
+  position: relative;
+  z-index: 1;
+  transition: transform 220ms ease, box-shadow 220ms ease;
+  will-change: transform;
+}
+
+.diffCard:hover{
+  z-index: 10;
+  transform: translateY(-8px);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.18);
 }
 
 .diffCard__img{
-  /* ✅ image ko inset padding feel */
   width: calc(100% - 20px);
-  height: 160px;                 /* ✅ compact */
+  height: 160px;
   margin: 10px auto 0;
-
   object-fit: cover;
-  object-position: center;      /* crop sahi */
-
+  object-position: center;
   border-radius: 12px;
   background: #fff;
   border: 1px solid rgba(0,0,0,0.06);
   display: block;
+  transition: transform 220ms ease, box-shadow 220ms ease;
+  will-change: transform;
+}
+.diffCard:hover .diffCard__img{
+  transform: translateY(-10px) scale(1.05);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.18);
 }
 
 .diffCard__body{
-  /* ✅ text clean spacing */
   padding: 12px 14px 14px;
   display: grid;
   gap: 6px;
 }
-
-
-/* ✅ Text zyada show but compact */
 .diffCard__title{
   margin: 0;
   font-size: 12px;
   font-weight: 900;
   color: rgba(11,15,16,0.86);
-
   display: -webkit-box;
-  -webkit-line-clamp: 3;     /* ✅ pehle 2 */
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
-
 .diffCard__desc{
   margin: 0;
   font-size: 10px;
   line-height: 1.35;
   color: rgba(11,15,16,0.56);
-
   display: -webkit-box;
-  -webkit-line-clamp: 5;     /* ✅ pehle 3 */
+  -webkit-line-clamp: 5;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
 
-/* CTA */
 .diffCtaRow{
   display: flex;
   justify-content: center;
   margin-top: 14px;
 }
-
 .diffCta{
   display: inline-flex;
   align-items: center;
@@ -1217,51 +878,6 @@ button.doctor__cta{
 }
 .diffCta__icon{ font-size: 14px; }
 
-
-
-/* =========================================================
-   POP-OUT HOVER (images bahar aayengi) — PASTE AT END
-========================================================= */
-
-/* 1) Problem circles: bahar pop */
-.problemVisual { overflow: visible !important; }
-.problemBubble { z-index: 1; }
-.problemBubble__img{
-  transition: transform 220ms ease, box-shadow 220ms ease;
-  will-change: transform;
-}
-.problemBubble:hover { z-index: 5; }
-.problemBubble:hover .problemBubble__img{
-  transform: translateY(-8px) scale(1.08);
-  box-shadow: 0 22px 50px rgba(0,0,0,0.22);
-}
-
-/* 2) Difference cards: image bahar pop + card lift */
-.diffGrid{ overflow: visible !important; }
-.diffCard{
-  overflow: visible !important;      /* ✅ important */
-  position: relative;
-  z-index: 1;
-  transition: transform 220ms ease, box-shadow 220ms ease;
-  will-change: transform;
-}
-.diffCard:hover{
-  z-index: 10;
-  transform: translateY(-8px);
-  box-shadow: 0 24px 60px rgba(0,0,0,0.18);
-}
-
-/* image pop */
-.diffCard__img{
-  transition: transform 220ms ease, box-shadow 220ms ease;
-  will-change: transform;
-}
-.diffCard:hover .diffCard__img{
-  transform: translateY(-10px) scale(1.05);
-  box-shadow: 0 18px 40px rgba(0,0,0,0.18);
-}
-
-/* optional: smooth on touch devices */
 @media (hover: none){
   .diffCard:hover,
   .diffCard:hover .diffCard__img,
@@ -1271,197 +887,15 @@ button.doctor__cta{
   }
 }
 
-
-
 /* =========================================================
-   FRAME RESPONSIVE — PASTE AFTER YOUR FRAME + HOVER CSS
+   TESTIMONIALS SECTION
 ========================================================= */
-
-/* ----------- 1200px (slightly tighter) ----------- */
-@media (max-width: 1200px){
-  .frameContainer{ max-width: 980px; }
-
-  .problemTitle{ font-size: 38px; }
-  .problemVisual{ min-height: 320px; }
-
-  .diffTitle{ font-size: 32px; }
-  .diffGrid{ max-width: 820px; }
-  .diffCard{ height: 245px; }
-  .diffCard__img{ height: 150px; }
-}
-
-/* ----------- 1024px (tablet) ----------- */
-@media (max-width: 1024px){
-  .frameSection{ padding: 40px 0 52px; }
-  .frameContainer{ max-width: 920px; }
-
-  /* Problem: 1 column */
-  .problemGrid{
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
-
-  .problemTitle{ font-size: 34px; }
-  .problemPara{ max-width: 560px; }
-
-  .problemVisual{
-    min-height: 300px;
-    margin-top: 4px;
-  }
-
-  /* center note smaller */
-  .problemCenterNote{
-    width: 240px;
-    height: 240px;
-    left: 50%;
-    top: 50%;
-  }
-
-  /* circles a bit closer */
-  .problemBubble--tr{ right: 10px; top: 6px; }
-  .problemBubble--bl{ left: 14px; bottom: 6px; }
-  .problemBubble--br{ right: 18px; bottom: 10px; }
-
-  /* Difference: 2 columns */
-  .diffTop{
-    grid-template-columns: 1fr;
-    gap: 10px;
-    align-items: start;
-  }
-  .diffTitleWrap{ text-align: left; }
-  .diffTag{ width: fit-content; max-width: 100%; }
-
-  .diffTitle{ font-size: 30px; }
-
-  .diffGrid{
-    grid-template-columns: repeat(2, 1fr);
-    max-width: 720px;
-    gap: 14px;
-  }
-
-  .diffCard{ height: 260px; }
-  .diffCard__img{
-    width: calc(100% - 18px);
-    height: 160px;
-  }
-}
-
-/* ----------- 768px (big phones / small tablets) ----------- */
-@media (max-width: 768px){
-  .frameSection{ padding: 34px 0 46px; }
-  .frameContainer{ padding: 0 16px; }
-
-  .problemTitle{ font-size: 30px; }
-  .problemPara{ font-size: 12px; }
-  .problemList{ font-size: 11px; }
-
-  .problemVisual{ min-height: 280px; }
-
-  .problemCenterNote{
-    width: 220px;
-    height: 220px;
-  }
-  .problemCenterNote__text{
-    font-size: 11px;
-    width: 80%;
-  }
-
-  /* circles smaller */
-  .problemBubble{ width: 140px; }
-  .problemBubble__img{
-    width: 84px;
-    height: 84px;
-    border-width: 6px;
-  }
-  .problemBubble__cap{ font-size: 10px; }
-
-  /* Difference */
-  .diffTitle{ font-size: 28px; }
-
-  .diffGrid{
-    max-width: 640px;
-    gap: 12px;
-  }
-
-  .diffCard{ height: 255px; }
-  .diffCard__img{ height: 150px; }
-}
-
-/* ----------- 520px (phones) ----------- */
-@media (max-width: 520px){
-  .frameSection{ padding: 28px 0 40px; }
-
-  /* Problem */
-  .problemTitle{ font-size: 26px; line-height: 1.08; }
-  .problemPara{ max-width: 100%; }
-
-  .problemVisual{ min-height: 260px; }
-
-  .problemCenterNote{
-    width: 200px;
-    height: 200px;
-  }
-
-  /* circles tighter so they don’t go out */
-  .problemBubble--tr{ right: 6px; top: 6px; }
-  .problemBubble--bl{ left: 8px; bottom: 8px; }
-  .problemBubble--br{ right: 10px; bottom: 10px; }
-
-  /* Difference: 1 column */
-  .diffTitle{ font-size: 24px; }
-  .diffGrid{
-    grid-template-columns: 1fr;
-    max-width: 420px;
-    gap: 14px;
-  }
-
-  .diffCard{ height: auto; } /* ✅ mobile me content ke hisab se */
-  .diffCard__img{
-    width: calc(100% - 18px);
-    height: 170px;
-  }
-
-  .diffCard__body{ padding: 12px 14px 16px; }
-  .diffCard__title{ font-size: 13px; -webkit-line-clamp: 2; }
-  .diffCard__desc{ font-size: 11px; -webkit-line-clamp: 4; }
-
-  .diffCta{ width: 100%; max-width: 420px; }
-}
-
-/* ----------- 360px (very small phones) ----------- */
-@media (max-width: 360px){
-  .problemTitle{ font-size: 24px; }
-  .problemVisual{ min-height: 240px; }
-
-  .problemCenterNote{
-    width: 180px;
-    height: 180px;
-  }
-
-  .diffTitle{ font-size: 22px; }
-  .diffCard__img{ height: 160px; }
-}
-
-/* ✅ safety: hover pop-out doesn’t clip on small screens */
-@media (max-width: 768px){
-  .problemVisual,
-  .diffGrid,
-  .diffCard{ overflow: visible !important; }
-}
-
-
-/* teati/testi.css */
-
-/* =========================
-   SECTION WRAPPER + LAYOUT
-========================= */
 .ts-section {
   position: relative;
   background: #fff;
   overflow: hidden;
   padding: 72px 0 96px;
 }
-
 .ts-section::before {
   content: "";
   position: absolute;
@@ -1470,20 +904,13 @@ button.doctor__cta{
   background: radial-gradient(closest-side, rgba(16, 165, 165, 0.10), transparent 70%);
   pointer-events: none;
 }
-
 .ts-container {
   width: min(1120px, 92%);
   margin: 0 auto;
   position: relative;
 }
+.ts-head { margin-bottom: 24px; }
 
-.ts-head {
-  margin-bottom: 24px;
-}
-
-/* =========================
-   TOP TITLES (teati/title1, title2)
-========================= */
 .ts-kicker {
   margin: 0 0 10px;
   font-size: 11px;
@@ -1492,7 +919,6 @@ button.doctor__cta{
   color: #16a5a5;
   font-weight: 800;
 }
-
 .ts-title {
   margin: 0;
   font-size: 44px;
@@ -1500,16 +926,10 @@ button.doctor__cta{
   color: #0f172a;
   font-weight: 900;
 }
-
 @media (max-width: 640px) {
-  .ts-title {
-    font-size: 30px;
-  }
+  .ts-title { font-size: 30px; }
 }
 
-/* =========================
-   TESTIMONIALS GRID (component/component.tsx)
-========================= */
 .ts-top {
   display: grid;
   grid-template-columns: 240px 1fr 280px;
@@ -1517,30 +937,19 @@ button.doctor__cta{
   align-items: start;
   margin-top: 14px;
 }
-
 @media (max-width: 980px) {
-  .ts-top {
-    grid-template-columns: 1fr;
-  }
+  .ts-top { grid-template-columns: 1fr; }
 }
 
-/* =========================
-   LEFT LIST
-========================= */
+/* left list */
 .ts-left {
   position: relative;
   padding-left: 8px;
-
-  /* ✅ hover move for circle + avatars/list */
   transition: transform 0.25s ease;
   will-change: transform;
 }
+.ts-left:hover { transform: translateX(10px); }
 
-.ts-left:hover {
-  transform: translateX(10px); /* move right */
-}
-
-/* circles svg */
 .ts-circles {
   position: absolute;
   left: -18px;
@@ -1551,11 +960,7 @@ button.doctor__cta{
   pointer-events: none;
   transform-origin: 50% 50%;
 }
-
-/* ✅ hover rotate */
-.ts-left:hover .ts-circles {
-  animation: ts-spin 5s linear infinite;
-}
+.ts-left:hover .ts-circles { animation: ts-spin 5s linear infinite; }
 
 @keyframes ts-spin {
   from { transform: rotate(0deg); }
@@ -1581,14 +986,8 @@ button.doctor__cta{
   transition: background 0.15s ease;
   user-select: none;
 }
-
-.ts-reviewItem:hover {
-  background: rgba(2, 132, 199, 0.06);
-}
-
-.ts-reviewActive {
-  background: rgba(16, 165, 165, 0.08);
-}
+.ts-reviewItem:hover { background: rgba(2, 132, 199, 0.06); }
+.ts-reviewActive { background: rgba(16, 165, 165, 0.08); }
 
 .ts-reviewAvatar {
   width: 34px;
@@ -1598,25 +997,15 @@ button.doctor__cta{
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
 }
 
-.ts-reviewMeta {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
+.ts-reviewMeta { display: flex; flex-direction: column; gap: 3px; }
 
-.ts-reviewNameRow {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
+.ts-reviewNameRow { display: flex; align-items: center; gap: 10px; }
 .ts-reviewName {
   margin: 0;
   font-size: 13px;
   font-weight: 900;
   color: #0f172a;
 }
-
 .ts-reviewLine {
   display: flex;
   align-items: center;
@@ -1624,36 +1013,14 @@ button.doctor__cta{
   font-size: 11px;
   color: #64748b;
 }
+.ts-stars { color: #f5b50a; line-height: 1; }
+.ts-rating { font-weight: 700; color: #0f172a; }
+.ts-dot { opacity: 0.65; }
+.ts-date { color: #64748b; }
 
-.ts-stars {
-  color: #f5b50a;
-  line-height: 1;
-}
-
-.ts-rating {
-  font-weight: 700;
-  color: #0f172a;
-}
-
-.ts-dot {
-  opacity: 0.65;
-}
-
-.ts-date {
-  color: #64748b;
-}
-
-/* =========================
-   CENTER QUOTE (paragraph.tsx + arrows)
-========================= */
-.ts-center {
-  position: relative;
-}
-
-.ts-quote {
-  position: relative;
-  min-height: 220px;
-}
+/* center quote */
+.ts-center { position: relative; }
+.ts-quote { position: relative; min-height: 220px; }
 
 .ts-quoteMark {
   position: absolute;
@@ -1662,49 +1029,23 @@ button.doctor__cta{
   color: #16a5a5;
   font-weight: 900;
 }
+.ts-quoteMark--open { left: 0; top: -10px; }
+.ts-quoteMark--close { right: 6px; bottom: 12px; transform: rotate(180deg); }
 
-.ts-quoteMark--open {
-  left: 0;
-  top: -10px;
-}
-
-.ts-quoteMark--close {
-  right: 6px;
-  bottom: 12px;
-  transform: rotate(180deg);
-}
-
-.ts-quoteTextWrap {
-  padding: 44px 56px 38px;
-  max-width: 560px;
-}
-
+.ts-quoteTextWrap { padding: 44px 56px 38px; max-width: 560px; }
 .ts-quoteText {
   margin: 0;
   color: #475569;
   font-size: 13px;
   line-height: 1.75;
 }
-
 @media (max-width: 980px) {
-  .ts-quoteTextWrap {
-    padding: 44px 16px 34px;
-  }
+  .ts-quoteTextWrap { padding: 44px 16px 34px; }
 }
 
-/* arrows (new.tsx) */
-.ts-nav {
-  display: flex;
-  gap: 10px;
-  padding-left: 56px;
-  margin-top: 14px;
-}
-
-@media (max-width: 980px) {
-  .ts-nav {
-    padding-left: 16px;
-  }
-}
+/* arrows */
+.ts-nav { display: flex; gap: 10px; padding-left: 56px; margin-top: 14px; }
+@media (max-width: 980px) { .ts-nav { padding-left: 16px; } }
 
 .ts-navBtn {
   width: 34px;
@@ -1717,257 +1058,871 @@ button.doctor__cta{
   cursor: pointer;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
+.ts-navBtn:hover { transform: translateY(-1px); box-shadow: 0 10px 22px rgba(0, 0, 0, 0.10); }
+.ts-navBtn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
+.ts-navIcon { width: 16px; height: 16px; color: #0f766e; }
 
-.ts-navBtn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.10);
-}
-
-.ts-navBtn:disabled {
-  opacity: 0.45;
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
-.ts-navIcon {
-  width: 16px;
-  height: 16px;
-  color: #0f766e;
-}
-
-/* =========================
-   RIGHT BEFORE/AFTER CARD
-========================= */
-.ts-right {
-  display: flex;
-  justify-content: flex-end;
-}
-
+/* right before/after */
+.ts-right { display: flex; justify-content: flex-end; }
 .ts-rightCard {
-  width: 280px;
+  width: 110px;
   background: #ffffff;
   border-radius: 18px;
   overflow: hidden;
   border: 1px solid rgba(15, 118, 110, 0.12);
   box-shadow: 0 22px 44px rgba(0, 0, 0, 0.14);
 }
-
-.ts-rightGrid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-}
-
-.ts-rightImg {
-  width: 100%;
-  height: 190px;
-  object-fit: cover;
-  display: block;
-}
-
-.ts-rightGrid img:first-child {
-  border-right: 1px solid rgba(2, 132, 199, 0.22);
-}
+.ts-rightGrid { display: grid; grid-template-columns: 1fr 1fr; }
+.ts-rightImg { width: 100%; height: 190px; object-fit: cover; display: block; }
+.ts-rightGrid img:first-child { border-right: 1px solid rgba(2, 132, 199, 0.22); }
 
 @media (max-width: 980px) {
-  .ts-right {
-    justify-content: flex-start;
-  }
-  .ts-rightCard {
-    width: min(360px, 100%);
-  }
+  .ts-right { justify-content: flex-start; }
+  .ts-rightCard { width: min(360px, 100%); }
 }
 
-/* =========================
-   RESULTS SECTION (Frame/Frame.tsx + Group.tsx + Frame1..6)
-========================= */
-.ts-results {
-  margin-top: 56px;
+/* =========================================================
+   RESULTS COLLAGE SECTION (FIXED + SINGLE SOURCE)
+/* =========================================================
+   RESULTS COLLAGE — Screenshot Match (REPLACE FULL BLOCK)
+   Classes used:
+   .ts-results, .ts-resultsInner, .ts-resultsHead,
+   .ts-resultsKicker, .ts-resultsTitle,
+   .ts-collageWrap, .ts-collage,
+   .ts-resultsBadge, .ts-badgeTop, .ts-badgeBottom,
+   .ts-polaroid, .ts-polaroidGrid, .ts-polaroidStack,
+   .ts-polaroidImg (+ size modifiers),
+   .ts-polaroid--f1 ... --f6
+========================================================= */
+
+/* SECTION */
+.ts-results{
+  width: 100%;
+  background: #ffffff;
+  padding: 64px 0 64px;
+  position: relative;
+  overflow: visible;              /* ✅ allow overlap */
 }
 
-.ts-resultsHead {
+/* soft stars / haze (optional like screenshot) */
+.ts-results::before{
+  content:"";
+  position:absolute;
+  inset: 0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 18% 20%, rgba(15,118,110,0.10), transparent 50%),
+    radial-gradient(circle at 82% 24%, rgba(2,132,199,0.08), transparent 55%),
+    radial-gradient(circle at 55% 78%, rgba(245,158,11,0.06), transparent 55%);
+  opacity: .9;
+}
+
+/* CONTAINER */
+.ts-resultsInner{
+  width: min(1200px, 94%);
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+/* HEAD */
+.ts-resultsHead{
   text-align: center;
-  margin-bottom: 24px;
+  margin-bottom: 22px;
 }
 
-.ts-resultsKicker {
+.ts-resultsKicker{
   margin: 0 0 10px;
   font-size: 11px;
   letter-spacing: 0.34em;
   text-transform: uppercase;
-  color: #16a5a5;
-  font-weight: 800;
+  color: #10b981;
+  font-weight: 900;
 }
 
-.ts-resultsTitle {
+.ts-resultsTitle{
   margin: 0;
-  font-size: 38px;
-  line-height: 1.1;
+  font-size: 48px;
+  line-height: 1.05;
   color: #0f172a;
   font-weight: 900;
 }
 
-@media (max-width: 640px) {
-  .ts-resultsTitle {
-    font-size: 28px;
-  }
+@media (max-width: 640px){
+  .ts-resultsTitle{ font-size: 32px; }
 }
 
-.ts-resultsBody {
+/* COLLAGE WRAP */
+.ts-collageWrap{
   position: relative;
+  padding: 10px 0 0;
 }
 
-/* small label */
-.ts-badge {
+/* COLLAGE STAGE (the big white area) */
+.ts-collage{
+  position: relative;
+  min-height: 460px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.92);
+  box-shadow: 0 26px 70px rgba(0,0,0,0.10);
+  border: 1px solid rgba(15, 23, 42, 0.06);
+
+  /* ✅ inner padding so edges don’t cut */
+  padding: 34px 34px 38px;
+  overflow: visible;
+}
+
+/* BADGE bubble top-right */
+.ts-resultsBadge{
   position: absolute;
-  right: 10px;
-  top: 120px;
-  background: #ffffff;
-  border: 1px solid rgba(14, 116, 144, 0.22);
-  padding: 8px 10px;
-  border-radius: 12px;
-  box-shadow: 0 14px 26px rgba(0, 0, 0, 0.10);
-  font-size: 12px;
+  right: 34px;
+  top: 26px;
+  width: 124px;
+  height: 124px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  z-index: 5;
+
+  background: radial-gradient(circle at 30% 30%,
+    rgba(16,185,129,0.22),
+    rgba(2,132,199,0.10)
+  );
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.12);
+}
+
+.ts-badgeTop{
+  display:block;
+  font-weight: 800;
+  color: #64748b;
+  font-size: 13px;
+  margin-bottom: 2px;
+}
+
+.ts-badgeBottom{
+  display:block;
   font-weight: 900;
-  color: #0f766e;
+  color: #f59e0b;
+  font-size: 13px;
+  font-style: italic;
+}
+
+/* POLAROID CARD */
+.ts-polaroid{
+  position: absolute;
+  background: #fff;
+  border-radius: 12px;
+  padding: 12px 12px 18px;
+  border: 1px solid rgba(15, 23, 42, 0.10);
+  box-shadow: 0 22px 44px rgba(0,0,0,0.16);
+  z-index: 2;
+  overflow: visible;
+}
+
+.ts-polaroidGrid{
+  display:grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.ts-polaroidGrid--tight{ gap: 6px; }
+
+.ts-polaroidStack{
+  display:grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.ts-polaroidImg{
+  width: 100%;
+  border-radius: 10px;
+  object-fit: cover;
+  display:block;
+  background: #f1f5f9;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+/* image sizes (tuned for screenshot feel) */
+.ts-polaroidImg--tall { height: 230px; }
+.ts-polaroidImg--p    { height: 150px; }
+.ts-polaroidImg--s    { height: 130px; }
+.ts-polaroidImg--m    { height: 165px; }
+.ts-polaroidImg--w    { height: 120px; }
+
+/* =========================================================
+   DESKTOP POSITIONS (percentage-based = no cut)
+   (matches screenshot layout)
+========================================================= */
+.ts-polaroid--f1{
+  width: 230px;
+  left: 10%;
+  top: 18%;
+  transform: rotate(-9deg);
+  z-index: 2;
+}
+
+.ts-polaroid--f2{
+  width: 320px;
+  left: 7%;
+  top: 44%;
+  transform: rotate(-10deg);
   z-index: 3;
 }
 
-/* ✅ collage wrapper centered + hover shift left */
-.ts-collage {
+.ts-polaroid--f3{
+  width: 260px;
+  left: 38%;
+  top: 28%;
+  transform: rotate(-2deg);
+  z-index: 2;
+}
+
+.ts-polaroid--f4{
+  width: 320px;
+  left: 56%;
+  top: 14%;
+  transform: rotate(6deg);
+  z-index: 3;
+}
+
+.ts-polaroid--f5{
+  width: 300px;
+  left: 45%;
+  top: 58%;
+  transform: rotate(-4deg);
+  z-index: 4;
+}
+
+.ts-polaroid--f6{
+  width: 290px;
+  left: 72%;
+  top: 52%;
+  transform: rotate(7deg);
+  z-index: 3;
+}
+
+/* =========================================================
+   TABLET / MOBILE: convert to grid (NO CUT)
+========================================================= */
+@media (max-width: 1100px){
+  .ts-collage{
+    min-height: auto;
+    padding: 18px 16px 22px;
+    box-shadow: 0 18px 44px rgba(0,0,0,0.12);
+  }
+
+  .ts-resultsBadge{
+    position: static;
+    margin: 0 auto 14px;
+  }
+
+  /* grid mode */
+  .ts-collage{
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px;
+    align-items: start;
+  }
+
+  /* kill all absolute positioning */
+  .ts-polaroid,
+  .ts-polaroid--f1,
+  .ts-polaroid--f2,
+  .ts-polaroid--f3,
+  .ts-polaroid--f4,
+  .ts-polaroid--f5,
+  .ts-polaroid--f6{
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    width: 100% !important;
+    transform: rotate(-1deg) !important;
+  }
+
+  .ts-polaroid--f2{ transform: rotate(2deg) !important; }
+  .ts-polaroid--f4{ transform: rotate(1deg) !important; }
+  .ts-polaroid--f6{ transform: rotate(2deg) !important; }
+}
+
+@media (max-width: 640px){
+  .ts-collage{
+    grid-template-columns: 1fr;
+  }
+
+  .ts-polaroidImg--tall { height: 200px; }
+  .ts-polaroidImg--p    { height: 140px; }
+  .ts-polaroidImg--m    { height: 150px; }
+}
+
+/* =========================================
+   TREATMENTS SECTION — FINAL (REPLACE ALL OLD)
+========================================= */
+
+/* SECTION */
+.tr-section{
+  background: #d9f0f1;
+  padding: 58px 0 72px;
+}
+
+.tr-container{
+  width: min(1120px, 92%);
+  margin: 0 auto;
+}
+
+.tr-head{ margin-bottom: 18px; }
+
+.tr-kicker{
+  margin: 0 0 8px;
+  font-size: 10px;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: rgba(11,111,115,.85);
+  font-weight: 900;
+}
+
+/* ✅ section heading only (fixes .tr-title collision) */
+.tr-head .tr-title{
+  margin: 0;
+  font-size: 44px;
+  line-height: 1.05;
+  color: #0b0f10;
+  font-weight: 900;
+}
+
+/* GRID */
+.tr-grid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 14px;
+  align-items: stretch;
+}
+
+/* CARD BASE */
+.tr-card{
   position: relative;
-  min-height: 460px;
-  width: min(1120px, 100%);
-  margin: 10px auto 0;
-  box-sizing: border-box;
+                  /* ✅ remove fixed width */
+  background: rgba(255,255,255,0.92);
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 16px;
+  box-shadow: 0 18px 44px rgba(0,0,0,0.10);
+  overflow: hidden;
 
-  --hs: 0px; /* hover shift value */
+  padding: 18px;
+  padding-bottom: 92px;        /* ✅ space for bottom strip+arrow */
+  min-height: 330px;
+   width: 290px;
+  display: flex;
+  flex-direction: column;
 }
 
-.ts-collage:hover {
-  --hs: -22px; /* ✅ hover pe thoda left */
-}
-
-/* dashed line guide */
-.ts-collage::before {
+/* subtle diagonal highlight like screenshot */
+.tr-card::before{
   content: "";
+  position: absolute;
+  inset: -40px;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0) 25%,
+    rgba(255,255,255,.70) 55%,
+    rgba(255,255,255,0) 78%
+  );
+  transform: rotate(-10deg);
+  opacity: .55;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* TOP */
+.tr-top,
+.tr-cardTop{
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: 10px;
+}
+
+/* icon (supports both class names) */
+.tr-ic,
+.tr-icon{
+  width: 28px;
+  height: 28px;
+  display: block;
+  opacity: .95;
+  color: rgba(11,15,16,0.72);
+}
+
+/* ✅ card title only (fixes .tr-title collision) */
+.tr-card .tr-title,
+.tr-cardTitle{
+  margin: 0;
+  font-size: 20px;
+  line-height: 1.1;
+  font-weight: 900;
+  color: rgba(11,15,16,0.88);
+  white-space: pre-line; /* "Hair\nTreatments" */
+}
+
+/* mini card (middle card top panel) */
+.tr-miniCard{
+  position: relative;
+  z-index: 3;
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.62);
+  border: 1px solid rgba(0,0,0,0.05);
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.tr-miniTitle{
+  font-weight: 900;
+  font-size: 13px;
+  color: rgba(11,15,16,0.9);
+  line-height: 1.2;
+}
+
+/* middle panel (middle card list area) */
+.tr-middleArea{
+  position: relative;
+  z-index: 2;
+  margin-top: 10px;
+  border-radius: 14px;
+  background: rgba(255,255,255,0.35);
+  border: 1px solid rgba(0,0,0,0.05);
+  min-height: 170px;
+  padding: 12px 14px;
+}
+
+/* LIST */
+.tr-list{
+  margin: 0;
+  padding-left: 16px;
+  font-size: 11px;
+  line-height: 1.55;
+  color: rgba(11,15,16,0.58);
+
+  white-space: normal;
+  word-break: normal;
+  overflow-wrap: break-word;
+}
+.tr-list li{ margin: 6px 0; }
+
+/* BOTTOM STRIP + ARROW (supports both wrappers) */
+.tr-bottom,
+.tr-cardBottom{
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 14px;
+  height: 72px;
+  z-index: 4;
+}
+
+.tr-strip{
   position: absolute;
   left: 0;
   right: 0;
-  top: 160px;
-  border-top: 2px dashed rgba(14, 116, 144, 0.25);
-  z-index: 0;
-}
-
-/* polaroid frames */
-.ts-polaroid {
-  position: absolute;
-  background: #ffffff;
+  bottom: 0;
+  height: 58px;
   border-radius: 12px;
-  padding: 10px 10px 16px;
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.14);
-  z-index: 1;
-
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-  will-change: transform;
+  background: linear-gradient(
+    90deg,
+    rgba(245, 158, 11, 0.14),
+    rgba(12,128,132,0.14)
+  );
+  border: 1px solid rgba(0,0,0,0.06);
 }
 
-.ts-collage:hover .ts-polaroid {
-  box-shadow: 0 24px 44px rgba(0, 0, 0, 0.16);
-}
+/* arrow button */
+.tr-go{
+  position: absolute;
+  right: 12px;
+  bottom: 10px;
 
-.ts-polaroidGrid {
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+  border: 1px solid rgba(11,15,16,0.28);
+  background: rgba(255,255,255,0.72);
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6px;
+  place-items: center;
+  cursor: pointer;
+
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+.tr-go:hover{
+  transform: translateY(-1px);
+  background: rgba(255,255,255,0.95);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.12);
 }
 
-.ts-polaroidImg {
-  width: 100%;
-  height: 160px;
+.tr-goIcon{ font-weight: 900; font-size: 16px; line-height: 1; }
+
+/* curves (if you have these divs in HTML, they'll work) */
+.tr-curve{
+  position: absolute;
+  border-radius: 999px;
+  pointer-events: none;
+  z-index: 1;
+}
+.tr-curve--a{
+  width: 260px;
+  height: 260px;
+  right: -120px;
+  top: -120px;
+  background: radial-gradient(circle at 35% 35%, rgba(255,255,255,0.70), rgba(255,255,255,0));
+  transform: rotate(18deg);
+}
+.tr-curve--b{
+  width: 280px;
+  height: 280px;
+  right: -140px;
+  bottom: -150px;
+  background: radial-gradient(circle at 40% 40%, rgba(12,128,132,0.18), rgba(255,255,255,0));
+  transform: rotate(-10deg);
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px){
+  .tr-head .tr-title{ font-size: 38px; }
+  .tr-grid{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px){
+  .tr-head .tr-title{ font-size: 30px; }
+  .tr-grid{ grid-template-columns: 1fr; }
+  .tr-card{ min-height: 300px; }
+}
+
+
+/* =========================
+   WHY / PROCESS SECTION
+========================= */
+
+.why-section {
+  position: relative;
+  background: #ffffff;
+  padding: 54px 0 64px;
+  overflow: hidden;
+}
+
+.why-container {
+  width: min(1120px, 92%);
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+/* Orbs (Group9) */
+.why-orbs {
+  position: absolute;
+  left: 26px;
+  top: 18px;
+  width: 220px;
+  height: 220px;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.why-orb {
+  position: absolute;
+  border-radius: 999px;
+  background: radial-gradient(circle at 35% 35%, rgba(12, 128, 132, 0.22), rgba(12, 128, 132, 0));
+  filter: blur(0.2px);
+}
+
+.why-orb--big {
+  width: 190px;
+  height: 190px;
+  left: 0;
+  top: 0;
+  opacity: 0.6;
+}
+
+.why-orb--small {
+  width: 120px;
+  height: 120px;
+  left: 48px;
+  top: 48px;
+  opacity: 0.55;
+  background: radial-gradient(circle at 35% 35%, rgba(12, 128, 132, 0.18), rgba(12, 128, 132, 0));
+}
+
+/* Header */
+.why-head {
+  text-align: center;
+  margin-bottom: 22px;
+}
+
+.why-kicker {
+  margin: 0 0 10px;
+  font-size: 11px;
+  letter-spacing: 0.26em;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: rgba(11, 111, 115, 0.9);
+}
+
+.why-titleBox {
+  display: inline-block;
+  padding: 10px 22px;
+  border: 1.5px solid rgba(126, 73, 255, 0.45);
+}
+
+.why-title {
+  margin: 0;
+  font-size: 40px;
+  line-height: 1.02;
+  font-weight: 900;
+  color: #0b0f10;
+}
+
+/* Layout */
+.why-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 34px;
+  align-items: center;
+  margin-top: 18px;
+}
+
+/* Left Image */
+.why-imageWrap {
   border-radius: 10px;
-  object-fit: cover;
+  overflow: hidden;
+  background: #f5f7f7;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.10);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.why-image{
+  width: 100%;
+  height: auto;
   display: block;
 }
 
-.ts-polaroidImg--tall {
-  height: 195px;
+/* Right Timeline */
+.why-steps {
+  position: relative;
+  padding-left: 56px; /* space for line + badge */
 }
 
-/* ✅ Desktop positions (center based + hover shift) */
-.ts-polaroid--f1 {
-  width: 250px;
-  left: 50%;
-  top: 80px;
-  transform: translateX(calc(-50% - 420px + var(--hs))) rotate(-10deg);
+.why-steps::before {
+  content: "";
+  position: absolute;
+  left: 23px;
+  top: 6px;
+  bottom: 6px;
+  width: 2px;
+  background: rgba(11, 15, 16, 0.22);
+  border-radius: 999px;
 }
 
-.ts-polaroid--f2 {
-  width: 220px;
-  left: 50%;
-  top: 240px;
-  transform: translateX(calc(-50% - 220px + var(--hs))) rotate(7deg);
+.why-step {
+  display: grid;
+  grid-template-columns: 46px 1fr;
+  gap: 16px;
+  align-items: start;
+  margin: 14px 0;
 }
 
-.ts-polaroid--f3 {
-  width: 270px;
-  left: 50%;
-  top: 80px;
-  transform: translateX(calc(-50% - 20px + var(--hs))) rotate(8deg);
+.why-badge {
+  width: 38px;
+  height: 38px;
+  border-radius: 999px;
+  border: 2px solid rgba(11, 15, 16, 0.75);
+  background: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  font-size: 12px;
+  color: rgba(11, 15, 16, 0.9);
 }
 
-.ts-polaroid--f4 {
-  width: 250px;
-  left: 50%;
-  top: 240px;
-  transform: translateX(calc(-50% + 190px + var(--hs))) rotate(-6deg);
+.why-stepTitle {
+  margin: 2px 0 4px;
+  font-size: 15px;
+  font-weight: 900;
+  color: rgba(11, 15, 16, 0.9);
 }
 
-.ts-polaroid--f5 {
-  width: 220px;
-  left: 50%;
-  top: 260px;
-  transform: translateX(calc(-50% + 360px + var(--hs))) rotate(6deg);
+.why-stepDesc {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.45;
+  color: rgba(11, 15, 16, 0.55);
 }
 
-.ts-polaroid--f6 {
-  width: 220px;
-  left: 50%;
-  top: 110px;
-  transform: translateX(calc(-50% + 420px + var(--hs))) rotate(-5deg);
+/* CTA */
+.why-ctaRow {
+  display: flex;
+  justify-content: center;
+  margin-top: 18px;
 }
 
-/* Responsive collage */
-@media (max-width: 950px) {
-  .ts-collage {
-    min-height: auto;
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 16px;
+.why-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 0;
+  cursor: pointer;
+  font-weight: 800;
+  font-size: 12px;
+  color: #ffffff;
+  background: #d38b2b;
+  box-shadow: 0 10px 22px rgba(211, 139, 43, 0.22);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+}
+
+.why-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 28px rgba(211, 139, 43, 0.28);
+  filter: brightness(1.02);
+}
+
+.why-btnIcon {
+  width: 16px;
+  height: 16px;
+}
+
+/* Responsive */
+@media (max-width: 980px) {
+  .why-title { font-size: 34px; }
+  .why-grid { grid-template-columns: 1fr; }
+  .why-image { height: 220px; }
+  .why-steps { padding-left: 52px; }
+}
+
+@media (max-width: 560px) {
+  .why-title { font-size: 28px; }
+  .why-titleBox { padding: 10px 14px; }
+}
+
+
+/* =========================
+   ABOUT SECTION
+========================= */
+
+.about-section {
+  padding: 80px 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #ffffff;
+  position: relative;
+}
+
+.about-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(10, 120, 120, 0.95),
+    rgba(6, 90, 95, 0.92)
+  );
+}
+
+.about-container {
+  width: min(1200px, 92%);
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+/* LEFT SIDE */
+
+.about-kicker {
+  letter-spacing: 0.25em;
+  font-size: 12px;
+  font-weight: 700;
+  opacity: 0.9;
+  margin-bottom: 16px;
+}
+
+.about-title {
+  font-size: 44px;
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 20px;
+}
+
+.about-text {
+  font-size: 14px;
+  line-height: 1.7;
+  opacity: 0.9;
+  margin-bottom: 16px;
+}
+
+.about-list {
+  margin-bottom: 26px;
+  padding-left: 20px;
+}
+
+.about-list li {
+  margin-bottom: 6px;
+}
+
+.about-btn {
+  padding: 12px 26px;
+  border-radius: 50px;
+  border: 1px solid #ffffff;
+  background: transparent;
+  color: #ffffff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.about-btn:hover {
+  background: #ffffff;
+  color: #0b5e60;
+}
+
+/* RIGHT SIDE FRAME */
+
+.about-frame {
+  display: flex;
+  justify-content: center;
+  transform: rotate(-6deg); /* tilt */
+}
+
+.about-frameInner {
+  background: #ffffff;
+  padding: 18px;
+  border-radius: 6px;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.25);
+}
+
+.about-frameInner img {
+  width: 320px;
+  height: auto;
+  display: block;
+  border-radius: 4px;
+}
+
+/* Responsive */
+
+@media (max-width: 992px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+    text-align: center;
   }
 
-  .ts-collage::before {
-    display: none;
+  .about-frame {
+    margin-top: 40px;
+    transform: rotate(-3deg);
   }
-
-  .ts-badge {
-    position: static;
-    margin: 10px auto 0;
-    width: fit-content;
-  }
-
-  .ts-polaroid {
-    position: relative;
-    left: auto;
-    top: auto;
-    width: 100%;
-    transform: rotate(-1deg);
-  }
-
-  .ts-polaroid--f2 { transform: rotate(2deg); }
-  .ts-polaroid--f3 { transform: rotate(-2deg); }
-  .ts-polaroid--f4 { transform: rotate(1deg); }
-  .ts-polaroid--f5 { transform: rotate(-1deg); }
-  .ts-polaroid--f6 { transform: rotate(2deg); }
 }

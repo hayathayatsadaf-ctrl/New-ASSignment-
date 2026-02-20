@@ -1,19 +1,18 @@
 type Props = {
-  leftSrc1?: string;
-  rightSrc2?: string;
-
+  leftSrc?: string;
+  rightSrc?: string;
 };
 
 export default function Frame5({
-   leftSrc1 = "/image 15.png",
-  rightSrc2 = "/image 16.png",
- 
-
+  leftSrc = "/Before botox 1.jpg",
+  rightSrc = "/After botox 1.jpg",
 }: Props) {
   return (
     <figure className="ts-polaroid ts-polaroid--f5">
-      <img className="ts-polaroidImg" src={ leftSrc1} />
-      <img className="ts-polaroidImg" src={ rightSrc2} />
+      <div className="ts-polaroidGrid">
+        <img className="ts-polaroidImg ts-polaroidImg--m" src={leftSrc} alt="Result 5 before" />
+        <img className="ts-polaroidImg ts-polaroidImg--m" src={rightSrc} alt="Result 5 after" />
+      </div>
     </figure>
   );
 }

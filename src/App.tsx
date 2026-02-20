@@ -5,6 +5,9 @@ import Doctar from "./Doctar";
 import Preview from "./Preview";
 import FRAME from "./Frame/FRAME"
 import Testi from "./test/testi";
+import Treatment from "./Tretment/Treatment";
+import Why from "./Why/Why";
+import About from "./about/About";
 
 
 export default function App() {
@@ -24,6 +27,12 @@ export default function App() {
       <FRAME/>
 
       <Testi/>
+
+        <Treatment />
+
+        <Why/>
+
+        <About/>
 
 
     </>
