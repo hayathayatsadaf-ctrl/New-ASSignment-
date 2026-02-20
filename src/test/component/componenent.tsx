@@ -1,5 +1,5 @@
 import { useMemo, useState } from "react";
-import Circle from "./circle";
+import Circle from "./Circle";
 import Paragraph from "./pargrph";
 import NavArrows from "./new";
 
