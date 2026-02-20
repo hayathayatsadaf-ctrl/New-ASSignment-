@@ -8,6 +8,9 @@ import Testi from "./test/testi";
 import Treatment from "./Tretment/Treatment";
 import Why from "./Why/Why";
 import About from "./about/About";
+import Consult from "./consult/Consaltant";
+import Footer from "./footer/Footer";
+
 
 
 export default function App() {
@@ -33,6 +36,8 @@ export default function App() {
         <Why/>
 
         <About/>
+      <Consult/>
+      <Footer/>
 
 
     </>
